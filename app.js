@@ -5,6 +5,7 @@ const PORT = 4000;
 // Import Routers
 const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
+const bookRoutes = require('./routes/books');
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 // Use Routers
 app.use('/products', productRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/books', bookRoutes);
 
 // Wildcard route for undefined paths
 app.all('*', (req, res) => {
