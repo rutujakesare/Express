@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const PORT = 4000;
 
+// Import Routers
+const productRoutes = require('./routes/products');
+const categoryRoutes = require('./routes/categories');
+
 // Middleware to parse JSON requests
 app.use(express.json());
 
@@ -11,22 +15,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
-app.get('/products', (req, res) => {
-    res.send('Here is the list of all products.');
-});
-
-app.post('/products', (req, res) => {
-    res.send('A new product has been added.');
-});
-
-app.get('/categories', (req, res) => {
-    res.send('Here is the list of all categories.');
-});
-
-app.post('/categories', (req, res) => {
-    res.send('A new category has been created.');
-});
+// Use Routers
+app.use('/products', productRoutes);
+app.use('/categories', categoryRoutes);
 
 // Wildcard route for undefined paths
 app.all('*', (req, res) => {
