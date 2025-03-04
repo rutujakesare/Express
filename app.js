@@ -1,24 +1,33 @@
-const express = require("express");
-
+const express = require('express');
 const app = express();
-const PORT = 5000;
+const PORT = 4000;
 
-// Custom Middleware
-const addUserMiddleware = (req, res, next) => {
-    req.user = "Guest"; 
-    next();
-};
+// Middleware to parse JSON requests
+app.use(express.json());
 
-// Home Route (Optional)
-app.get("/", (req, res) => {
-    res.send("<h1>Home Page</h1>");
+// Routes
+app.get('/products', (req, res) => {
+    res.send('Here is the list of all products.');
 });
 
-// Welcome Route with Middleware
-app.get("/welcome", addUserMiddleware, (req, res) => {
-    res.send(`<h1>Welcome, ${req.user}!</h1>`);
+app.post('/products', (req, res) => {
+    res.send('A new product has been added.');
 });
 
+app.get('/categories', (req, res) => {
+    res.send('Here is the list of all categories.');
+});
+
+app.post('/categories', (req, res) => {
+    res.send('A new category has been created.');
+});
+
+// Wildcard route for undefined paths
+app.all('*', (req, res) => {
+    res.status(404).send('<h1>404 - Page Not Found</h1>');
+});
+
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
